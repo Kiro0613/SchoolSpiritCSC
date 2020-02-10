@@ -9,8 +9,6 @@ namespace Player {
         public Camera Cam;
         public PlrUse Use;
 
-        public int melonCount = 0;
-
         public ILogger logger = Debug.unityLogger;
         
         // Start is called before the first frame update

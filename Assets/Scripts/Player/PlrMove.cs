@@ -125,6 +125,7 @@ namespace Player {
                 if(inputVector.z == 0) { moveVector.z *= 1 - speedDecay; }
             }
             
+            //Converts the movement vector from global space to local space (relative to player)
             newMove += transform.right * moveVector.x;
             newMove += transform.up * jumpVector;
             newMove += transform.forward * moveVector.z;
