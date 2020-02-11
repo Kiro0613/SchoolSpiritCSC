@@ -75,7 +75,6 @@ namespace Player {
 
         // Update is called once per frame
         void Update() {
-            player.log(charControl.transform.up);
             //Grounded is just so you can check in the inspector if the player is grounded.
             grounded = charControl.isGrounded;
             HandleInput();

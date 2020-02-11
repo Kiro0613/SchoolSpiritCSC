@@ -17,23 +17,24 @@ namespace Enemy {
 
         // Update is called once per frame
         void Update() {
-            if(showVis) {
-            }
+
         }
 
         private void OnDrawGizmosSelected() {
-            Vector3 leftBound = Quaternion.Euler(0, (visAngle/2) * -1, 0) * (transform.position + transform.forward * visRange);
-            Vector3 rightBound = Quaternion.Euler(0, visAngle / 2, 0) * (transform.position + transform.forward * visRange);
+            if(showVis) {
+                Vector3 fwdBound = transform.forward * visRange;
+                Vector3 leftBound = Quaternion.Euler(0f, visAngle / -2, 0f) * fwdBound;
+                Vector3 rightBound = Quaternion.Euler(0f, visAngle / 2, 0f) * fwdBound;
 
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transform.position + transform.forward * 10f);
+                Gizmos.color = Color.green;
+                Gizmos.DrawLine(transform.position, transform.position + fwdBound);
 
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(transform.position, leftBound);
+                Gizmos.color = Color.red;
+                Gizmos.DrawLine(transform.position, transform.position + leftBound);
 
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position, rightBound);
+                Gizmos.color = Color.blue;
+                Gizmos.DrawLine(transform.position, transform.position + rightBound);
+            }
         }
     }
-
 }
