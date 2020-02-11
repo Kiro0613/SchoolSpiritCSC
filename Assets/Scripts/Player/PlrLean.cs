@@ -17,8 +17,11 @@ namespace Player {
         Vector3 leanPos;
         Vector3 leanRot;
 
+        Vector3 lastUp;
+
         private void Awake() {
             player = GetComponent<Player>();
+            lastUp = transform.up;
         }
 
         // Start is called before the first frame update
@@ -29,6 +32,13 @@ namespace Player {
 
         // Update is called once per frame
         void Update() {
+            if(transform.up != lastUp) {
+                //player.log("transform.up changed!");
+            }
+
+            lastUp = transform.up;
+
+
             leanAxis = Input.GetAxis(leanInput);
 
             player.Cam.transform.localPosition = Vector3.MoveTowards(player.Cam.transform.localPosition, leanPos * leanAxis, leanSpeed);

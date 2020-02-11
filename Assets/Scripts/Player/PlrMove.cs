@@ -3,16 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player {
-    public enum PlayerStates {
-        Idle,
-        Walking,
-        Running,
-        Jumping,
-        Aerial
-    }
-
     public class PlrMove : MonoBehaviour {
-        public PlayerStates state;
+        public Player player;
 
         [Header("Inputs")]
         public string HorizontalInput = "Horizontal";
@@ -71,6 +63,7 @@ namespace Player {
         CharacterController charControl;
 
         private void Awake() {
+            player = GetComponent<Player>();
             charControl = GetComponent<CharacterController>();
             standingHeight = transform.localScale.y;
         }
@@ -82,6 +75,7 @@ namespace Player {
 
         // Update is called once per frame
         void Update() {
+            player.log(charControl.transform.up);
             //Grounded is just so you can check in the inspector if the player is grounded.
             grounded = charControl.isGrounded;
             HandleInput();
@@ -161,15 +155,15 @@ namespace Player {
             if(charControl.isGrounded) {
                 if(inputVector.x != 0 || inputVector.z != 0) {
                     if(runPressed) {
-                        state = PlayerStates.Running;
+                        player.state = PlayerStates.Running;
                     } else {
-                        state = PlayerStates.Walking;
+                        player.state = PlayerStates.Walking;
                     }
                 } else {
-                    state = PlayerStates.Idle;
+                    player.state = PlayerStates.Idle;
                 }
             } else {
-                state = PlayerStates.Aerial;
+                player.state = PlayerStates.Aerial;
             }
         }
     }

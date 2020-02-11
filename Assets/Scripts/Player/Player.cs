@@ -3,11 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace Player {
+    public enum PlayerStates {
+        Idle,
+        Walking,
+        Running,
+        Jumping,
+        Aerial
+    }
 
     public class Player : MonoBehaviour {
         public PlrMove Move;
         public Camera Cam;
         public PlrUse Use;
+
+        public PlayerStates state;
 
         public ILogger logger = Debug.unityLogger;
         
