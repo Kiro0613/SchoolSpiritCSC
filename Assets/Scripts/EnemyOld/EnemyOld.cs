@@ -9,7 +9,7 @@ public enum EnemyStates {
     Chasing
 }
 
-public class Enemy : MonoBehaviour {
+public class EnemyOld : MonoBehaviour {
     public GameObject player;
 
     public EnemyStates state;

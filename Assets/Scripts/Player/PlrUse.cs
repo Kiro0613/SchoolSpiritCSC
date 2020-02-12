@@ -26,10 +26,9 @@ namespace Player {
             pickupPressed = Input.GetButtonDown(pickupInput);
 
             if(pickupPressed) {
-                player.log("Clicked.");
                 //This detects things on layer 9. Change the bitmask (1 << 9) to change the layer it's active for.
                 if(Physics.Raycast(player.Cam.transform.position, player.Cam.transform.forward, out RaycastHit hit, pickupRange, 1 << 9)) {
-                    player.log("Used a thing.");
+                    hit.transform.gameObject.SendMessage("Use", gameObject);
                 }
             }
         }
