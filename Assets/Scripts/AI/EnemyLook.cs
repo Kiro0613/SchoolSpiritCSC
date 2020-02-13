@@ -8,7 +8,6 @@ namespace Enemy {
 
         Player.Player player;
         public GameObject target;
-        public bool seesPlayer = false;
 
         public bool showVis = false;
         public bool logAngle = false;
@@ -33,30 +32,21 @@ namespace Enemy {
 
         // Update is called once per frame
         void Update() {
+            //Gets direction vector from enemy to player
             vectorToPlr = player.transform.position - transform.position;
             angleToPlr = Vector3.Angle(transform.forward, vectorToPlr);
             inVisCone = angleToPlr <= visAngle / 2;
 
-            Debug.DrawRay(transform.position, player.transform.position, Color.red, 0.1f);
+            LookForPlayer();
 
-            if(angleToPlr <= visAngle / 2) {
-                if(Physics.Raycast(transform.position, vectorToPlr, out RaycastHit hit, visRange)) {
-                    if(hit.transform.CompareTag("Player")) {
-                        distToPlr = hit.distance;
-                        seesPlayer = true;
-                    } else {
-                        seesPlayer = false;
-                        distToPlr = -1f;
-                    }
-                } else {
-                    seesPlayer = false;
-                    distToPlr = -1f;
-                }
-            } else {
-                seesPlayer = false;
-                distToPlr = -1f;
+            HandleState();
+
+            if(me.state == EnemyStates.Idle) {
+
             }
+        }
 
+        public void HandleState() {
             if(Mathf.Sign(distToPlr) == -1) {
                 me.state = EnemyStates.Idle;
             } else if(distToPlr <= visRange / 2) {
@@ -68,7 +58,27 @@ namespace Enemy {
             }
         }
 
-        private void OnDrawGizmos() {
+        public void LookForPlayer() {
+            if(inVisCone) {
+                if(Physics.Raycast(transform.position, vectorToPlr, out RaycastHit hit, visRange)) {
+                    if(hit.transform.CompareTag("Player")) {
+                        distToPlr = hit.distance;
+                        me.seesPlayer = true;
+                    } else {
+                        me.seesPlayer = false;
+                        distToPlr = -1f;
+                    }
+                } else {
+                    me.seesPlayer = false;
+                    distToPlr = visRange + 1f;
+                }
+            } else {
+                me.seesPlayer = false;
+                distToPlr = -1f;
+            }
+        }
+
+        private void OnDrawGizmosSelected() {
             if(showVis) {
                 player = GameObject.Find("player").GetComponent<Player.Player>();
                 vectorToPlr = player.transform.position - transform.position;
@@ -85,9 +95,6 @@ namespace Enemy {
 
                 Gizmos.color = Color.blue;
                 Gizmos.DrawLine(transform.position, transform.position + rightBound);
-
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(transform.position, transform.position + vectorToPlr);
 
                 Gizmos.color = Color.magenta;
                 Gizmos.DrawLine(transform.position, player.transform.position);

@@ -12,13 +12,13 @@ namespace Player {
     }
 
     public class Player : MonoBehaviour {
-        public PlrMove Move;
-        public Camera Cam;
-        public PlrUse Use;
+        public static PlrMove Move;
+        public static Camera Cam;
+        public static PlrUse Use;
 
-        public PlayerStates state;
+        public static float visibility = 1f;
 
-        public ILogger logger = Debug.unityLogger;
+        public static PlayerStates state;
         
         // Start is called before the first frame update
         void Awake() {
@@ -30,10 +30,6 @@ namespace Player {
         // Update is called once per frame
         void Update() {
 
-        }
-
-        public void log(object message) {
-            logger.Log(message);
         }
     }
 }

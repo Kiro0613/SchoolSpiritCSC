@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Player {
     public class PlrMove : MonoBehaviour {
-        public Player player;
+        //public Player player;
 
         [Header("Inputs")]
         public string HorizontalInput = "Horizontal";
@@ -63,7 +63,7 @@ namespace Player {
         CharacterController charControl;
 
         private void Awake() {
-            player = GetComponent<Player>();
+            //player = GetComponent<Player>();
             charControl = GetComponent<CharacterController>();
             standingHeight = transform.localScale.y;
         }
@@ -154,15 +154,15 @@ namespace Player {
             if(charControl.isGrounded) {
                 if(inputVector.x != 0 || inputVector.z != 0) {
                     if(runPressed) {
-                        player.state = PlayerStates.Running;
+                        Player.state = PlayerStates.Running;
                     } else {
-                        player.state = PlayerStates.Walking;
+                        Player.state = PlayerStates.Walking;
                     }
                 } else {
-                    player.state = PlayerStates.Idle;
+                    Player.state = PlayerStates.Idle;
                 }
             } else {
-                player.state = PlayerStates.Aerial;
+                Player.state = PlayerStates.Aerial;
             }
         }
     }
