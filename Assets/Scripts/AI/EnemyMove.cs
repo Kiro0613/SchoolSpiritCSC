@@ -49,19 +49,10 @@ namespace Enemy {
 
             charControl.SimpleMove(Vector3.zero);
 
-            HandleCoroutines();
-
-            if(Input.GetKeyDown(KeyCode.I)) {
-                Debug.Log(chasePlayer);
-            }
-
-            if(Input.GetButtonDown("BigRedButton")) {
-                Debug.Log("PUSHED THE BIG RED BUTTON!!!");
-                StopAllCoroutines();
-            }
+            //HandleCoroutines();
 
             if(Input.GetButtonDown("Test")) {
-                chasePlayer = StartCoroutine(ChasePlayer(moveSpeed, turnSpeed));
+                //chasePlayer = StartCoroutine(ChasePlayer(moveSpeed, turnSpeed));
             }
 
             //Make sure this is LAST thing done before frame update
@@ -159,8 +150,6 @@ namespace Enemy {
             }
 
             while(me.seesPlayer) {
-                if(Input.GetButtonDown("Test2")) { yield break; }
-
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(Global.Plr.transform.position - transform.position, transform.up), Time.deltaTime * turnSpeed);
 
                 charControl.SimpleMove(Global.Plr.transform.position - transform.position);

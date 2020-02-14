@@ -12,7 +12,4 @@ public class Global : MonoBehaviour {
     void Update() {
         
     }
-
-
-
 }

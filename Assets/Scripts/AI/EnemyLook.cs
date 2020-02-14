@@ -39,22 +39,8 @@ namespace Enemy {
 
             LookForPlayer();
 
-            HandleState();
-
             if(me.state == EnemyStates.Idle) {
 
-            }
-        }
-
-        public void HandleState() {
-            if(Mathf.Sign(distToPlr) == -1) {
-                me.state = EnemyStates.Idle;
-            } else if(distToPlr <= visRange / 2) {
-                me.state = EnemyStates.Chasing;
-            } else if(distToPlr <= visRange) {
-                me.state = EnemyStates.Searching;
-            } else {
-                me.state = EnemyStates.Patrolling;
             }
         }
 
