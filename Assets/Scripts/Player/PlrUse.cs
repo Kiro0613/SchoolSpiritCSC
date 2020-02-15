@@ -28,7 +28,7 @@ namespace Player {
             if(pickupPressed) {
                 //This detects things on layer 9. Change the bitmask (1 << 9) to change the layer it's active for.
                 if(Physics.Raycast(Player.Cam.transform.position, Player.Cam.transform.forward, out RaycastHit hit, pickupRange, 1 << 9)) {
-                    hit.transform.gameObject.SendMessage("Use", gameObject);
+                    //hit.transform.gameObject.SendMessage("Use", gameObject);
                 }
             }
         }

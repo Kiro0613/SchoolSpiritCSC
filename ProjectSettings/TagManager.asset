@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Floor
+  - Node
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -15,9 +18,9 @@ TagManager:
   - 
   - PostProcessing
   - Usable Item
-  - 
-  - 
-  - 
+  - Wall
+  - Node
+  - Target Node
   - 
   - 
   - 
