@@ -10,10 +10,9 @@ public class Node : MonoBehaviour {
     public bool findNeighbors = false;
     public bool showLines = false;
     public List<Node> neighbors;
-    public Node[][] paths;
 
     private void Awake() {
-        //nodeMap = GetComponentInParent<NodeMap>();
+        nodeMap = GetComponentInParent<NodeMap>();
     }
 
     // Start is called before the first frame update

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Enemy {
     public enum EnemyStates {
@@ -13,6 +14,9 @@ namespace Enemy {
     public class Enemy : MonoBehaviour {
         public EnemyMove Move;
         public EnemyLook Look;
+        public EnemyPatrol Patrol;
+
+        public NavMeshAgent agent;
 
         public EnemyStates state;
 
@@ -21,9 +25,14 @@ namespace Enemy {
 
         public bool seesPlayer = false;
 
+        public Transform target;
+
         private void Awake() {
             Move = GetComponent<EnemyMove>();
             Look = GetComponent<EnemyLook>();
+            Patrol = GetComponent<EnemyPatrol>();
+
+            agent = GetComponent<NavMeshAgent>();
 
             state = EnemyStates.Idle;
             lastState = EnemyStates.Idle;
@@ -40,6 +49,7 @@ namespace Enemy {
         void Start() {
             lookAt = gameObject.AddComponent<LookAt>();
             lookAtPlayer = gameObject.AddComponent<LookAtPlayer>();
+            target = transform;
         }
 
         // Update is called once per frame
@@ -62,6 +72,7 @@ namespace Enemy {
 
             switch(state) {
                 case EnemyStates.Patrolling:
+                    Patrol.Patrol();
                     break;
                 case EnemyStates.Chasing:
                     break;
@@ -75,15 +86,15 @@ namespace Enemy {
         }
 
         void HandleState() {
-            if(Mathf.Sign(Look.distToPlr) == -1) {
-                state = EnemyStates.Idle;
-            } else if(Look.distToPlr <= Look.visRange / 2) {
-                state = EnemyStates.Chasing;
-            } else if(Look.distToPlr <= Look.visRange) {
-                state = EnemyStates.Searching;
-            } else {
+            //if(Mathf.Sign(Look.distToPlr) == -1) {
+            //    state = EnemyStates.Idle;
+            //} else if(Look.distToPlr <= Look.visRange / 2) {
+            //    state = EnemyStates.Chasing;
+            //} else if(Look.distToPlr <= Look.visRange) {
+            //    state = EnemyStates.Searching;
+            //} else {
                 state = EnemyStates.Patrolling;
-            }
+            //}
         }
     }
 }

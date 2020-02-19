@@ -54,7 +54,7 @@ public class NodeMap : MonoBehaviour {
         nodeList = FindObjectsOfType<Node>();
         int indexCount = 0;
 
-        //Debug.Log("Finding neighbors...");
+        Debug.Log("Finding neighbors...");
 
         foreach(Node node in nodeList) {
             node.name = "Node " + indexCount;
@@ -65,6 +65,6 @@ public class NodeMap : MonoBehaviour {
             indexCount++;
         }
 
-        //Debug.Log("Finished finding neighbors.");
+        Debug.Log("Finished finding neighbors.");
     }
 }

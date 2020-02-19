@@ -45,22 +45,17 @@ namespace Enemy {
         }
 
         public void LookForPlayer() {
-            if(inVisCone) {
-                if(Physics.Raycast(transform.position, vectorToPlr, out RaycastHit hit, visRange)) {
-                    if(hit.transform.CompareTag("Player")) {
-                        distToPlr = hit.distance;
-                        me.seesPlayer = true;
-                    } else {
-                        me.seesPlayer = false;
-                        distToPlr = -1f;
-                    }
+            if(Physics.Raycast(transform.position, vectorToPlr, out RaycastHit hit, visRange)) {
+                if(hit.transform.CompareTag("Player")) {
+                    distToPlr = hit.distance;
+                    me.seesPlayer = true;
                 } else {
+                    distToPlr = -1f;
                     me.seesPlayer = false;
-                    distToPlr = visRange + 1f;
                 }
             } else {
-                me.seesPlayer = false;
                 distToPlr = -1f;
+                me.seesPlayer = false;
             }
         }
 
