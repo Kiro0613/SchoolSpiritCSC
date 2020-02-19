@@ -15,6 +15,7 @@ namespace Enemy {
         public EnemyMove Move;
         public EnemyLook Look;
         public EnemyPatrol Patrol;
+        public EnemyChase Chase;
 
         public NavMeshAgent agent;
 
@@ -31,6 +32,7 @@ namespace Enemy {
             Move = GetComponent<EnemyMove>();
             Look = GetComponent<EnemyLook>();
             Patrol = GetComponent<EnemyPatrol>();
+            Chase = GetComponent<EnemyChase>();
 
             agent = GetComponent<NavMeshAgent>();
 
@@ -75,6 +77,7 @@ namespace Enemy {
                     Patrol.Patrol();
                     break;
                 case EnemyStates.Chasing:
+                    Chase.Chase();
                     break;
                 case EnemyStates.Searching:
                     break;
@@ -83,6 +86,8 @@ namespace Enemy {
                 default:
                     break;
             }
+
+            lastState = state;
         }
 
         void HandleState() {
@@ -93,8 +98,35 @@ namespace Enemy {
             //} else if(Look.distToPlr <= Look.visRange) {
             //    state = EnemyStates.Searching;
             //} else {
-                state = EnemyStates.Patrolling;
+            //    state = EnemyStates.Patrolling;
             //}
+
+            if(seesPlayer) {
+                state = EnemyStates.Chasing;
+                Look.visAngle = 45f;
+                Look.visRange = 30f;
+            } else {
+                state = EnemyStates.Patrolling;
+                Look.visAngle = 30f;
+                Look.visRange = 16f;
+            }
+        }
+
+        public void SwapAgent(NavMeshAgent newAgent) {
+            //System.Type type = agent.GetType();
+            //System.Reflection.FieldInfo[] fields = type.GetFields();
+
+            //foreach(System.Reflection.FieldInfo field in fields) {
+            //    field.SetValue(agent, field.GetValue(newAgent));
+            //}
+
+            Debug.Log("Swapping Agent to " + newAgent.name);
+
+            agent.speed = newAgent.speed;
+            agent.angularSpeed = newAgent.angularSpeed;
+            agent.acceleration = newAgent.acceleration;
+            agent.stoppingDistance = newAgent.stoppingDistance;
+            agent.autoBraking = newAgent.autoBraking;
         }
     }
 }

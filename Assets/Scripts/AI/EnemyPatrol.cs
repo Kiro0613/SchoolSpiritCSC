@@ -33,9 +33,17 @@ namespace Enemy {
         }
 
         public void Patrol() {
-            remainingDist = me.agent.remainingDistance;
+            if(me.state != me.lastState) {
+                me.SwapAgent(EnemyAgents.patrolAgent);
+            }
 
-            if(me.agent.remainingDistance <= 1) {
+            if(patrolRoute.Count < 1) {
+                return;
+            }
+
+            remainingDist = me.transform.position.flatDistTo(me.target.position);
+
+            if(remainingDist <= 1) {
                 routeIndex = routeIndex < patrolRoute.Count - 1 ? routeIndex + 1 : 0;
                 targetNode = patrolRoute[routeIndex];
             }

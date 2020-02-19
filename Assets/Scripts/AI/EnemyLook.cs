@@ -6,9 +6,6 @@ namespace Enemy {
     public class EnemyLook : MonoBehaviour {
         Enemy me;
 
-        Player.Player player;
-        public GameObject target;
-
         public bool showVis = false;
         public bool logAngle = false;
 
@@ -27,32 +24,26 @@ namespace Enemy {
 
         // Start is called before the first frame update
         void Start() {
-            player = GameObject.Find("player").GetComponent<Player.Player>();
+
         }
 
         // Update is called once per frame
         void Update() {
             //Gets direction vector from enemy to player
-            vectorToPlr = player.transform.position - transform.position;
+            vectorToPlr = Global.Plr.transform.position - transform.position;
             angleToPlr = Vector3.Angle(transform.forward, vectorToPlr);
-            inVisCone = angleToPlr <= visAngle / 2;
-
+            
             LookForPlayer();
-
-            if(me.state == EnemyStates.Idle) {
-
-            }
         }
 
         public void LookForPlayer() {
-            if(Physics.Raycast(transform.position, vectorToPlr, out RaycastHit hit, visRange)) {
-                if(hit.transform.CompareTag("Player")) {
-                    distToPlr = hit.distance;
-                    me.seesPlayer = true;
-                } else {
-                    distToPlr = -1f;
-                    me.seesPlayer = false;
-                }
+            if(
+                angleToPlr <= visAngle / 2 &&   //Plr is in vis cone
+                Physics.Raycast(transform.position, vectorToPlr, out RaycastHit hit, visRange) &&   //Enemy sees something in vis range
+                hit.transform.CompareTag("Player")  //Thing that enemy sees is the player
+            ) {
+                distToPlr = hit.distance;
+                me.seesPlayer = true;
             } else {
                 distToPlr = -1f;
                 me.seesPlayer = false;
@@ -61,8 +52,7 @@ namespace Enemy {
 
         private void OnDrawGizmosSelected() {
             if(showVis) {
-                player = GameObject.Find("player").GetComponent<Player.Player>();
-                vectorToPlr = player.transform.position - transform.position;
+                vectorToPlr = Global.Plr.transform.position - transform.position;
 
                 Vector3 fwdBound = transform.forward * visRange;
                 Vector3 leftBound = Quaternion.Euler(0f, visAngle / -2, 0f) * fwdBound;
@@ -78,7 +68,7 @@ namespace Enemy {
                 Gizmos.DrawLine(transform.position, transform.position + rightBound);
 
                 Gizmos.color = Color.magenta;
-                Gizmos.DrawLine(transform.position, player.transform.position);
+                Gizmos.DrawLine(transform.position, Global.Plr.transform.position);
             }
         }
 
